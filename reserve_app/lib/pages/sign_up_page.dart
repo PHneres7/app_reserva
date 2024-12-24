@@ -66,6 +66,7 @@ class SignUp extends StatelessWidget {
                     ),
                     CustomButton(
                       label: 'Criar Conta',
+                      route: AppRouts.loginPage,
                     ),
                     SizedBox(
                       height: 30,

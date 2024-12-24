@@ -2,27 +2,31 @@ import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   final String label;
+  final String route;
   final String? imageIcon;
   final Color? backgroundColor;
   final Color? labelColor;
   final Color? borderColor;
+  final EdgeInsets? margin;
 
   const CustomButton({
     super.key,
     required this.label,
+    required this.route,
     this.imageIcon,
     this.backgroundColor,
     this.labelColor,
     this.borderColor,
+    this.margin,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: margin ?? EdgeInsets.symmetric(vertical: 20),
       child: ElevatedButton(
         onPressed: () {
-          print("Botão Login clicado!");
+          Navigator.of(context).pushNamed(route);
         },
         style: ElevatedButton.styleFrom(
             backgroundColor: backgroundColor ?? Colors.blue,

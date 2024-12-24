@@ -62,6 +62,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       CustomButton(
                         label: 'Login',
+                        route: AppRouts.mainPage,
                       ),
                       SizedBox(
                         height: 40,
@@ -69,6 +70,7 @@ class LoginPage extends StatelessWidget {
                       CustomDivider(),
                       CustomButton(
                         label: 'Login with Google',
+                        route: AppRouts.mainPage,
                         labelColor: Colors.grey.shade700,
                         backgroundColor: Colors.white,
                         imageIcon: 'asset/GoogleLogo.png',
@@ -85,7 +87,7 @@ class LoginPage extends StatelessWidget {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     Navigator.of(context)
-                                        .pushNamed(AppRouts.SignUpPage);
+                                        .pushNamed(AppRouts.signUpPage);
                                   },
                                 text: ' Registre-se',
                                 style: TextStyle(color: Colors.blue),
