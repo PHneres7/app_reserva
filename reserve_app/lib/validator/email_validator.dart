@@ -1,4 +1,3 @@
-
 import 'package:reserve_app/validator/validator.dart';
 
 class EmailValidator extends Validator {

@@ -1,9 +1,9 @@
 import 'package:reserve_app/validator/validator.dart';
 
-class PasswordValidator extends Validator {
-  PasswordValidator(
+class UsernameValidator extends Validator {
+  UsernameValidator(
     super.fieldName, [
-    super.message = 'Senha inválido',
+    super.message = 'Username inválido',
   ]);
 
   @override
@@ -11,9 +11,7 @@ class PasswordValidator extends Validator {
     if (value == null || value.isEmpty) {
       return '$fieldName não pode estar vazio.';
     }
-    if (value.length < 6 ||
-        !RegExp(r'[A-Z]').hasMatch(value) ||
-        !RegExp(r'[0-9]').hasMatch(value)) {
+    if (value.length < 3) {
       return formattedMessage;
     }
     return null;

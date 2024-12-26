@@ -5,5 +5,6 @@ class TextStylesManager {
         fontSize: 12,
         fontWeight: FontWeight.normal,
         color: Colors.black,
+        
       );
 }

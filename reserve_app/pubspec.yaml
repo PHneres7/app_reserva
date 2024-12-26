@@ -58,6 +58,9 @@ flutter:
   uses-material-design: true
 
   assets:
+    - asset/asset_auditorio.jpg
+    - asset/asset_lab.jpg
+    - asset/asset_sala_de_reuniao.jpg
     - asset/GoogleLogo.png
   
 

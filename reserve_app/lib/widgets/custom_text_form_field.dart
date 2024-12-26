@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class CustomTextFormField extends StatefulWidget {
   final String label;
   final FloatingLabelBehavior? floatingLabelBehavior;
@@ -30,7 +29,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           focusedBorder: const OutlineInputBorder(),
           label: Text(
             widget.label,
-            style: TextStyle(fontSize: widget.fontSize ?? 14),
+            style: TextStyle(fontSize: widget.fontSize ?? 20),
           ),
           labelStyle: const TextStyle(
             color: Colors.black,
@@ -38,10 +37,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           floatingLabelBehavior:
               widget.floatingLabelBehavior ?? FloatingLabelBehavior.always,
         ),
-        
         cursorColor: Colors.black,
         cursorWidth: 1.0,
-        validator: widget.validator, 
+        validator: widget.validator,
       ),
     );
   }

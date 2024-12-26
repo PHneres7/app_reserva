@@ -35,6 +35,8 @@ class CardItem extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
                           'Sala de Reunião',
@@ -44,57 +46,72 @@ class CardItem extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        //coluna com as informações menores
                         Expanded(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    'Capacidade: ',
-                                    style: TextStylesManager.infos,
-                                  ),
-                                  Icon(
-                                    Icons.people_alt,
-                                    size: 18,
-                                  ),
-                                  Text(
-                                    ' 20 pessoas',
-                                    style: TextStylesManager.infos,
-                                  ),
-                                ],
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Capacidade: ',
+                                      style: TextStylesManager.infos,
+                                    ),
+                                    Icon(
+                                      Icons.people_alt,
+                                      size: 18,
+                                    ),
+                                    Text(
+                                      ' 20 pessoas',
+                                      style: TextStylesManager.infos,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    'Disponibilidade: ',
-                                    style: TextStylesManager.infos,
-                                  ),
-                                  Icon(
-                                    Icons.access_time_filled,
-                                    size: 18,
-                                  ),
-                                  Text(
-                                    ' 10:00-12:00',
-                                    style: TextStylesManager.infos,
-                                  ),
-                                ],
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Disponibilidade: ',
+                                      style: TextStylesManager.infos,
+                                    ),
+                                    Icon(
+                                      Icons.access_time_filled,
+                                      size: 18,
+                                    ),
+                                    Text(
+                                      ' 10:00-12:00',
+                                      style: TextStylesManager.infos,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    'Status: ',
-                                    style: TextStylesManager.infos,
-                                  ),
-                                  Icon(
-                                    Icons.check_circle,
-                                    size: 18,
-                                  ),
-                                  Text(
-                                    ' ativo',
-                                    style: TextStylesManager.infos,
-                                  ),
-                                ],
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Status: ',
+                                      style: TextStylesManager.infos,
+                                    ),
+                                    Icon(
+                                      Icons.check_circle,
+                                      //Icons.cancel,
+                                      //Icons.build_circle
+                                      size: 18,
+                                    ),
+                                    Text(
+                                      ' ativo',
+                                      //inativo
+                                      //manutenção
+                                      style: TextStylesManager.infos,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),

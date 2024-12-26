@@ -82,6 +82,7 @@ class LoginPage extends StatelessWidget {
                           textAlign: TextAlign.center,
                           text: TextSpan(
                             text: 'Não possui uma conta?',
+                            style: TextStyle(color: Colors.black),
                             children: <TextSpan>[
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
