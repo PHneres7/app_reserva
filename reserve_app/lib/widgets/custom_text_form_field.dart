@@ -6,6 +6,9 @@ class CustomTextFormField extends StatefulWidget {
   final double? fontSize;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
+  final IconData? suffixIcon;
+  final VoidCallback? onSuffixIconPressed;
+  final bool isPasswordField; 
 
   const CustomTextFormField({
     super.key,
@@ -14,6 +17,9 @@ class CustomTextFormField extends StatefulWidget {
     this.fontSize,
     this.validator,
     this.controller,
+    this.suffixIcon,
+    this.onSuffixIconPressed,
+    this.isPasswordField = false,
   });
 
   @override
@@ -21,12 +27,25 @@ class CustomTextFormField extends StatefulWidget {
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
+  bool _obscureText = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _obscureText =
+        widget.isPasswordField; 
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: TextFormField(
         controller: widget.controller,
+        cursorColor: Colors.black,
+        cursorWidth: 1.0,
+        obscureText: _obscureText,
+        validator: widget.validator,
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
           focusedBorder: const OutlineInputBorder(),
@@ -34,15 +53,27 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             widget.label,
             style: TextStyle(fontSize: widget.fontSize ?? 20),
           ),
-          labelStyle: const TextStyle(
-            color: Colors.black,
-          ),
+          labelStyle: const TextStyle(color: Colors.black),
           floatingLabelBehavior:
               widget.floatingLabelBehavior ?? FloatingLabelBehavior.always,
+          suffixIcon: widget.isPasswordField
+              ? IconButton(
+                  icon: Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText; 
+                    });
+                  },
+                )
+              : (widget.suffixIcon != null
+                  ? IconButton(
+                      icon: Icon(widget.suffixIcon),
+                      onPressed: widget.onSuffixIconPressed,
+                    )
+                  : null),
         ),
-        cursorColor: Colors.black,
-        cursorWidth: 1.0,
-        validator: widget.validator,
       ),
     );
   }

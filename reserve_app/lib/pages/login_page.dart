@@ -29,7 +29,7 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Olá, bem vindo de volta!!',
+                  'Olá, Bem-Vindo de Volta!!',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
@@ -59,9 +59,10 @@ class LoginPage extends StatelessWidget {
                         ).validate,
                       ),
                       CustomTextFormField(
-                        label: 'Password',
+                        label: 'Senha',
                         controller: _passwordController,
                         validator: PasswordValidator('Senha').validate,
+                        isPasswordField: true,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5, right: 10),
@@ -72,7 +73,7 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                       CustomButton(
-                        label: 'Login',
+                        label: 'Entrar',
                         onPressed: () {
                           String email = _emailController.text;
                           String password = _passwordController.text;
@@ -107,7 +108,7 @@ class LoginPage extends StatelessWidget {
                               loginTeste[email] != password) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('Conta Não Existente'),
+                                content: Text('Conta não existente'),
                                 backgroundColor: Colors.red,
                               ),
                             );
@@ -120,7 +121,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       CustomDivider(),
                       CustomButton(
-                        label: 'Login with Google',
+                        label: 'Login com Google',
                         onPressed: () {},
                         labelColor: Colors.grey.shade700,
                         backgroundColor: Colors.white,

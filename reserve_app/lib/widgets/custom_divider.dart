@@ -18,7 +18,7 @@ class CustomDivider extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            'Or With',
+            'Logar com',
             style: TextStyle(fontSize: 16),
           ),
         ),
