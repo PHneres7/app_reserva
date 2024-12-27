@@ -5,6 +5,7 @@ class CustomTextFormField extends StatefulWidget {
   final FloatingLabelBehavior? floatingLabelBehavior;
   final double? fontSize;
   final String? Function(String?)? validator;
+  final TextEditingController? controller;
 
   const CustomTextFormField({
     super.key,
@@ -12,6 +13,7 @@ class CustomTextFormField extends StatefulWidget {
     this.floatingLabelBehavior,
     this.fontSize,
     this.validator,
+    this.controller,
   });
 
   @override
@@ -24,6 +26,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: TextFormField(
+        controller: widget.controller,
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
           focusedBorder: const OutlineInputBorder(),

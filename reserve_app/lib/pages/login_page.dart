@@ -1,16 +1,22 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import 'package:reserve_app/app/app_routs.dart';
 import 'package:reserve_app/validator/email_validator.dart';
 import 'package:reserve_app/validator/password_validator.dart';
 import 'package:reserve_app/widgets/custom_button.dart';
-import 'package:reserve_app/widgets/custom_divider.dart';
-import 'package:reserve_app/widgets/custom_text_form_field.dart';
+import '../widgets/custom_divider.dart';
+import '../widgets/custom_text_form_field.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   final _formKey = GlobalKey<FormState>();
+  final Map<String, String> loginTeste = {
+    'emailteste@gmail.com': 'Senha1234',
+    'email2teste@gmail.com': 'Senha4321',
+  };
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,10 +53,14 @@ class LoginPage extends StatelessWidget {
                     children: [
                       CustomTextFormField(
                         label: 'Email',
-                        validator: EmailValidator("Email").validate,
+                        controller: _emailController,
+                        validator: EmailValidator(
+                          "Email",
+                        ).validate,
                       ),
                       CustomTextFormField(
                         label: 'Password',
+                        controller: _passwordController,
                         validator: PasswordValidator('Senha').validate,
                       ),
                       Padding(
@@ -64,16 +74,44 @@ class LoginPage extends StatelessWidget {
                       CustomButton(
                         label: 'Login',
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
+                          String email = _emailController.text;
+                          String password = _passwordController.text;
+
+                          if (_formKey.currentState!.validate() &&
+                              loginTeste[email] == password) {
                             Navigator.of(context).pushNamed(AppRouts.mainPage);
-                          } else {
+                            return;
+                          }
+                          if (_formKey.currentState!.validate() &&
+                              loginTeste.containsKey(email) &&
+                              loginTeste[email] != password) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text(
-                                    'Por favor, corrija os erros no formulário.'),
+                                content: Text('Senha incorreta'),
                                 backgroundColor: Colors.red,
                               ),
                             );
+                            return;
+                          }
+                          if (!_formKey.currentState!.validate()) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Email ou senha inválidos'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                            return;
+                          }
+
+                          if (_formKey.currentState!.validate() &&
+                              loginTeste[email] != password) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Conta Não Existente'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                            return;
                           }
                         },
                       ),
