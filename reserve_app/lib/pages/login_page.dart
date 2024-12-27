@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 import 'package:reserve_app/app/app_routs.dart';
 import 'package:reserve_app/validator/email_validator.dart';
-import 'package:reserve_app/validator/phone_validator.dart';
+import 'package:reserve_app/validator/password_validator.dart';
 import 'package:reserve_app/widgets/custom_button.dart';
 import 'package:reserve_app/widgets/custom_divider.dart';
 import 'package:reserve_app/widgets/custom_text_form_field.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
-
+  LoginPage({super.key});
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,16 +41,17 @@ class LoginPage extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
                 child: Form(
+                  key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       CustomTextFormField(
                         label: 'Email',
-                        validator: EmailValidator("E-mail").validate,
+                        validator: EmailValidator("Email").validate,
                       ),
                       CustomTextFormField(
                         label: 'Password',
-                        validator: PhoneValidator("phone").validate,
+                        validator: PasswordValidator('Senha').validate,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5, right: 10),
@@ -62,7 +63,19 @@ class LoginPage extends StatelessWidget {
                       ),
                       CustomButton(
                         label: 'Login',
-                        route: AppRouts.mainPage,
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            Navigator.of(context).pushNamed(AppRouts.mainPage);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                    'Por favor, corrija os erros no formulário.'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        },
                       ),
                       SizedBox(
                         height: 40,
@@ -70,7 +83,7 @@ class LoginPage extends StatelessWidget {
                       CustomDivider(),
                       CustomButton(
                         label: 'Login with Google',
-                        route: AppRouts.mainPage,
+                        onPressed: () {},
                         labelColor: Colors.grey.shade700,
                         backgroundColor: Colors.white,
                         imageIcon: 'asset/GoogleLogo.png',

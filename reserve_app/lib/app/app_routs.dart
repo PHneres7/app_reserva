@@ -11,8 +11,8 @@ abstract class AppRouts {
   static const reservesPage = 'reserves';
 
   static Map<String, WidgetBuilder> routes = {
-    loginPage: (context) => const LoginPage(),
-    signUpPage: (context) => const SignUp(),
+    loginPage: (context) => LoginPage(),
+    signUpPage: (context) => SignUp(),
     mainPage: (context) => const MainPage(),
     reservesPage: (context) => const ReservesPage()
   };

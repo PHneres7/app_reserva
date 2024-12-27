@@ -2,11 +2,16 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:reserve_app/app/app_routs.dart';
+import 'package:reserve_app/validator/email_validator.dart';
+import 'package:reserve_app/validator/password_validator.dart';
+import 'package:reserve_app/validator/phone_validator.dart';
+import 'package:reserve_app/validator/username_validator.dart';
 import 'package:reserve_app/widgets/custom_button.dart';
 import 'package:reserve_app/widgets/custom_text_form_field.dart';
 
 class SignUp extends StatelessWidget {
-  const SignUp({super.key});
+  SignUp({super.key});
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,61 +46,81 @@ class SignUp extends StatelessWidget {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    CustomTextFormField(
-                      label: 'Enter Your Username',
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fontSize: 12,
-                    ),
-                    CustomTextFormField(
-                      label: 'Enter Your Email',
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fontSize: 12,
-                    ),
-                    CustomTextFormField(
-                      label: 'Enter Your Phone Number',
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fontSize: 12,
-                    ),
-                    CustomTextFormField(
-                      label: 'Enter Your Password',
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fontSize: 12,
-                    ),
-                    CustomButton(
-                      label: 'Criar Conta',
-                      route: AppRouts.loginPage,
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Divider(
-                      color: Colors.black,
-                      height: 0.5,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          text: 'Já possui uma conta?',
-                          children: <TextSpan>[
-                            TextSpan(
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.of(context)
-                                      .pushNamed(AppRouts.loginPage);
-                                },
-                              text: ' Login',
-                              style: TextStyle(color: Colors.blue),
-                            ),
-                          ],
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      CustomTextFormField(
+                        label: 'Nome de Usuário',
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        fontSize: 12,
+                        validator:
+                            UsernameValidator('Nome de Usuário').validate,
+                      ),
+                      CustomTextFormField(
+                        label: 'Email',
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        fontSize: 12,
+                        validator: EmailValidator('Email').validate,
+                      ),
+                      CustomTextFormField(
+                        label: 'Número de Telefone',
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        fontSize: 12,
+                        validator: PhoneValidator('Número').validate,
+                      ),
+                      CustomTextFormField(
+                        label: 'Senha',
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        fontSize: 12,
+                        validator: PasswordValidator('Senha').validate,
+                      ),
+                      CustomButton(
+                        label: 'Criar Conta',
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            Navigator.of(context).pushNamed(AppRouts.mainPage);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                    'Por favor, corrija os erros no formulário.'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Divider(
+                        color: Colors.black,
+                        height: 0.5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: 'Já possui uma conta?',
+                            children: <TextSpan>[
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.of(context)
+                                        .pushNamed(AppRouts.loginPage);
+                                  },
+                                text: ' Login',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

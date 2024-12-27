@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   final String label;
-  final String route;
+  final String? route;
+  final VoidCallback onPressed;
   final String? imageIcon;
   final Color? backgroundColor;
   final Color? labelColor;
@@ -12,7 +13,8 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.label,
-    required this.route,
+    required this.onPressed,
+    this.route,
     this.imageIcon,
     this.backgroundColor,
     this.labelColor,
@@ -25,9 +27,7 @@ class CustomButton extends StatelessWidget {
     return Padding(
       padding: margin ?? EdgeInsets.symmetric(vertical: 20),
       child: ElevatedButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed(route);
-        },
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
             backgroundColor: backgroundColor ?? Colors.blue,
             padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),

@@ -11,9 +11,15 @@ class UsernameValidator extends Validator {
     if (value == null || value.isEmpty) {
       return '$fieldName não pode estar vazio.';
     }
+
     if (value.length < 3) {
-      return formattedMessage;
+      return '$fieldName muito curto';
     }
+
+    if (!value.contains(' ') || value.split(' ').length < 2) {
+      return '$fieldName deve conter pelo menos um sobrenome.';
+    }
+
     return null;
   }
 }

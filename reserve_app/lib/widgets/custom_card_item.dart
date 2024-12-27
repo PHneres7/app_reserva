@@ -118,7 +118,7 @@ class CardItem extends StatelessWidget {
                         ),
                         CustomButton(
                           label: "Ver Detalhes",
-                          route: AppRouts.loginPage,
+                          onPressed: () {},
                           margin: EdgeInsets.symmetric(vertical: 0),
                         )
                       ],

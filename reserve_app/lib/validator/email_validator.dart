@@ -6,7 +6,7 @@ class EmailValidator extends Validator {
 
   EmailValidator(
     super.fieldName, [
-    super.message = 'e-mail inválido',
+    super.message = 'inválido',
   ]);
 
   @override
