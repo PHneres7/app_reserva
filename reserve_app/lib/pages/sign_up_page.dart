@@ -1,17 +1,32 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import 'package:reserve_app/services/save_user.dart';
+import 'package:reserve_app/widgets/custom_text_form_field.dart';
+import 'package:reserve_app/widgets/custom_button.dart';
 import 'package:reserve_app/app/app_routs.dart';
+
 import 'package:reserve_app/validator/email_validator.dart';
 import 'package:reserve_app/validator/password_validator.dart';
 import 'package:reserve_app/validator/phone_validator.dart';
 import 'package:reserve_app/validator/username_validator.dart';
-import 'package:reserve_app/widgets/custom_button.dart';
-import 'package:reserve_app/widgets/custom_text_form_field.dart';
 
-class SignUp extends StatelessWidget {
-  SignUp({super.key});
+//DESSA FORMA OS DADOS DE CADASTRO FICAM NO REALTIME DATABASE
+
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
+
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,36 +66,50 @@ class SignUp extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      //NOME DE USUARIO
                       CustomTextFormField(
                         label: 'Nome de Usuário',
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        fontSize: 12,
+                        controller: _usernameController,
                         validator:
                             UsernameValidator('Nome de Usuário').validate,
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        fontSize: 12,
                       ),
+                      //EMAIL
                       CustomTextFormField(
                         label: 'Email',
+                        controller: _emailController,
+                        validator: EmailValidator('Email').validate,
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                         fontSize: 12,
-                        validator: EmailValidator('Email').validate,
                       ),
+                      //NUMERO DE TELEFONE
                       CustomTextFormField(
                         label: 'Número de Telefone',
+                        controller: _phoneController,
+                        validator: PhoneValidator('Número').validate,
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                         fontSize: 12,
-                        validator: PhoneValidator('Número').validate,
                       ),
+                      //SENHA
                       CustomTextFormField(
                         label: 'Senha',
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        fontSize: 12,
+                        controller: _passwordController,
                         validator: PasswordValidator('Senha').validate,
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        isPasswordField: true,
+                        fontSize: 12,
                       ),
                       CustomButton(
                         label: 'Criar Conta',
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            Navigator.of(context).pushNamed(AppRouts.mainPage);
+                            UserService.saveUser(
+                                context: context,
+                                username: _usernameController.text,
+                                email: _emailController.text,
+                                phone: _phoneController.text,
+                                password: _passwordController.text);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
