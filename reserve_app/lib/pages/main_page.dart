@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:reserve_app/app/app_routs.dart';
-import 'package:reserve_app/widgets/custom_card_item.dart';
-import 'package:reserve_app/widgets/custom_icon_button.dart';
+import 'package:reserve_app/services/depois_eu_uso.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+import '../app/app_routs.dart';
+import '../widgets/custom_card_item.dart';
+import '../widgets/custom_icon_button.dart';
 
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
+class MainPage extends StatelessWidget {
+  MainPage({super.key});
+  final RealtimeDatabaseService databaseService = RealtimeDatabaseService();
 
-class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,37 +25,57 @@ class _MainPageState extends State<MainPage> {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          //Cada Item deve vir do Firebase
-          //Falta deixar todos os parâmetros nomeados e obrigatórios
-          //Ainda estão todos marretados.
-          CardItem(),
-        ],
+      body: FutureBuilder<List<Map<String, dynamic>>>(
+        future: databaseService.getLocais(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Erro ao carregar os locais.'));
+          } else if (snapshot.hasData) {
+            final locais = snapshot.data!;
+
+            return ListView.builder(
+              itemCount: locais.length,
+              itemBuilder: (context, index) {
+                final local = locais[index];
+                return CardItem(
+                  name: local['nome'],
+                  capacity: local['capacidade'],
+                  status: local['status'],
+                  availability: local['disponibilidade'],
+                );
+              },
+            );
+          } else {
+            return Center(child: Text('Nenhum local encontrado.'));
+          }
+        },
       ),
       bottomNavigationBar: BottomAppBar(
-          height: 90,
-          color: Colors.blueAccent.shade100,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            spacing: 10,
-            children: [
-              CustomIconButton(
-                label: 'Home',
-                icon: Icons.home_outlined,
-                route: AppRouts.mainPage,
-              ),
-              VerticalDivider(
-                width: 2,
-                color: Colors.white,
-              ),
-              CustomIconButton(
-                label: 'Reservas',
-                icon: Icons.calendar_month_outlined,
-                route: AppRouts.reservesPage,
-              ),
-            ],
-          )),
+        height: 90,
+        color: Colors.blueAccent.shade100,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          spacing: 10,
+          children: [
+            CustomIconButton(
+              label: 'Home',
+              icon: Icons.home_outlined,
+              route: AppRouts.mainPage,
+            ),
+            VerticalDivider(
+              width: 2,
+              color: Colors.white,
+            ),
+            CustomIconButton(
+              label: 'Reservas',
+              icon: Icons.calendar_month_outlined,
+              route: AppRouts.reservesPage,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

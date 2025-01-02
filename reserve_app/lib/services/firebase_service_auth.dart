@@ -10,20 +10,27 @@ class FirebaseServiceAuth {
           email: email, password: password);
       return credential.user;
     } catch (e) {
-      print('Ocorreu um erro');
+      print('Erro$e');
     }
   }
 
-Future<User?> signInWithEmailAndPassword(
+  Future<User?> signInWithEmailAndPassword(
       String email, String password) async {
     try {
       UserCredential credential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       return credential.user;
     } catch (e) {
-      print('Ocorreu um erro');
+      print('Erro$e');
     }
   }
 
-
+ // Future<User?> signInWithCredential(AuthCredential creden) async {
+ //   try {
+ //     UserCredential credential = await _auth.signInWithCredential(creden);
+ //     return credential.user;
+ //   } catch (e) {
+ //     print('erro $e');
+ //   }
+ // }
 }

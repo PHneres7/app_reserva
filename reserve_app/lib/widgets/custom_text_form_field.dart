@@ -8,7 +8,7 @@ class CustomTextFormField extends StatefulWidget {
   final TextEditingController? controller;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixIconPressed;
-  final bool isPasswordField; 
+  final bool isPasswordField;
 
   const CustomTextFormField({
     super.key,
@@ -32,8 +32,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   void initState() {
     super.initState();
-    _obscureText =
-        widget.isPasswordField; 
+    _obscureText = widget.isPasswordField;
   }
 
   @override
@@ -63,7 +62,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   ),
                   onPressed: () {
                     setState(() {
-                      _obscureText = !_obscureText; 
+                      _obscureText = !_obscureText;
                     });
                   },
                 )

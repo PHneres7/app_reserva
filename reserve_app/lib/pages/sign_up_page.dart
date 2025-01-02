@@ -1,15 +1,17 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 
-import 'package:reserve_app/services/save_user.dart';
-import 'package:reserve_app/widgets/custom_text_form_field.dart';
-import 'package:reserve_app/widgets/custom_button.dart';
-import 'package:reserve_app/app/app_routs.dart';
+import '../services/firebase_service_auth.dart';
+import '../services/sign_up_service.dart';
 
-import 'package:reserve_app/validator/email_validator.dart';
-import 'package:reserve_app/validator/password_validator.dart';
-import 'package:reserve_app/validator/phone_validator.dart';
-import 'package:reserve_app/validator/username_validator.dart';
+import '../widgets/custom_text_form_field.dart';
+import '../widgets/custom_button.dart';
+import '../app/app_routs.dart';
+
+import '../validator/email_validator.dart';
+import '../validator/password_validator.dart';
+import '../validator/phone_validator.dart';
+import '../validator/username_validator.dart';
 
 //DESSA FORMA OS DADOS DE CADASTRO FICAM NO REALTIME DATABASE
 
@@ -23,10 +25,21 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
 
+  final FirebaseServiceAuth _auth = FirebaseServiceAuth();
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,19 +117,11 @@ class _SignUpState extends State<SignUp> {
                         label: 'Criar Conta',
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            UserService.saveUser(
-                                context: context,
-                                username: _usernameController.text,
-                                email: _emailController.text,
-                                phone: _phoneController.text,
-                                password: _passwordController.text);
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                    'Por favor, corrija os erros no formulário.'),
-                                backgroundColor: Colors.red,
-                              ),
+                            SignUpService().signUp(
+                              context: context,
+                              formKey: _formKey,
+                              emailController: _emailController,
+                              passwordController: _passwordController,
                             );
                           }
                         },
